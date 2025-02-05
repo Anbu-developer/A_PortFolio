@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anbu's Portfolio</title>
+    <link rel="icon" type="image/jpg" href="/A_PortFolio/pics/mirror-2.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00ffff;
+            --secondary: #ff00ff;
+            --accent: #ff5500;
+            --dark: #000000;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        body {
+            background: var(--dark);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: rgba(10, 10, 18, 0.98);
+        }
+
+        .navbar-brand {
+            color: var(--primary) !important;
+            font-weight: 700;
+        }
+
+        .navbar-toggler {
+            border-color: var(--primary);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: yellow !important;
+        }
+
+        /* Welcome Modal */
+        #welcomeModal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--gradient);
+            padding: 2rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 0 50px var(--primary);
+            z-index: 9999;
+            animation: popIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            90% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .hero-banner {
+            background-image: url('/A_PortFolio/pics/bike-3.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.266);
+            height: 300px;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                text-align: left;
+                
+            }
+            .hero-banner {
+                height: 400px;
+                margin-top: 0;
+            }
+        }
+
+         /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--primary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(218, 1, 252, 0.997);
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            margin: 0.8rem 0;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .skill-item:hover {
+            background: rgba(0, 255, 255, 0.05);
+            transform: translateX(10px);
+            box-shadow: 0 0 30px rgb(253, 254, 254);
+        }
+         /* Projects Section */
+         .project-card {
+            position: relative;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid transparent;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient);
+            opacity: 1;
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 40px rgb(0, 255, 255);
+            
+        }
+
+        .project-card:hover::before {
+            opacity: 0.1;
+            transform: rotate(45deg);
+            
+        }
+
+        .project-links {
+            margin-top: 1.5rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-links {
+            opacity: 1;
+        }
+
+        /* Resume Button */
+        .resume-btn {
+            background-color: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .resume-btn:hover {
+            background-color: var(--secondary);
+            color: white;
+            transform: scale(1.1);
+        }
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: rgba(251, 251, 251, 0);
+            border: 1px solid var(--primary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        
+
+        .copy1{
+            text-align: center;
+            font-size: small;
+        }
+
+        /* Scroll Animation */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            background: var(--gradient);
+            
+            
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Modal -->
+    <div id="welcomeModal" class="text-center">
+        <h1 class="display-4 fw-bold">Hey Dude!👋</h1>
+        <p class="lead">Welcome to My Engineering Universe</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-cogs me-2"></i>Anbu's Portfolio
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#resume">Resume</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section container scroll-animate">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1> </h1>
+                <br>
+                <br>
+                <h1 class="display-2 fw-bold mb-4">Mechanical Engineer, Designer & Developer</h1>
+                <p class="lead fs-4">Mechanical Engineering Graduate, Passion for Innovation and Problem Solving.</p>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-banner"></div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- About Section -->
+    <section id="about" class="container py-5 scroll-animate">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content" style="border-left: 3px solid var(--primary); padding-left: 2rem;">
+            <p class="lead">I am Anbu S, a dynamic and innovative Mechanical Engineering graduate with a passion for design, automation, and data-driven solutions. With a strong foundation in mechanical principles and expertise in CAD software like SolidWorks, Fusion 360, CATIA V5, and AutoCAD, I specialize in creating efficient and optimized designs. My curiosity for technology led me to master Python, Java, C, SQL, HTML, CSS, JavaScript, and Bootstrap, allowing me to bridge the gap between engineering and software development.</p>
+            <p class="lead">I thrive on solving complex problems, whether through mechanical design, coding, or data analysis, and I am always eager to explore cutting-edge innovations. My hands-on experience includes developing the One Tap Cleaner, a semi-automatic brush with a slider-crank mechanism, and designing an Electric Tractor with 4-wheel drive for enhanced mobility. Additionally, my HR Data Analysis and PizzaHub SQL projects showcase my ability to extract meaningful insights from large datasets.</p>
+            <p class="lead">Beyond my technical expertise, I have strong communication skills, a knack for presentation and leadership, and a passion for fitness training. I am driven by a continuous learning mindset, always striving to push boundaries and make an impact in both the mechanical and IT domains. 🚀</p>
+        </div>
+    </section>
+    
+
+    <!-- Skills Section -->
+    <section id="skills" class="container py-5 scroll-animate">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+            <!-- Programming Languages -->
+            <div class="skill-category">
+                <h4><i class="fas fa-code me-2"></i><strong>Programming</strong></h4>
+                <div class="skill-item">
+                    <i class="fab fa-python me-3"></i>Python
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-java me-3"></i>Java
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-copyright me-3"></i>C Programming
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-js me-3"></i>JavaScript
+                </div>
+            </div>
+
+            <!-- Web Development -->
+            <div class="skill-category">
+                <h4><i class="fas fa-globe me-2"></i><strong>Web Tools</strong></h4>
+                <div class="skill-item">
+                    <i class="fab fa-html5 me-3"></i>HTML5
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-css3 me-3"></i>CSS3
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-js me-3"></i>JavaScript
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-bootstrap me-3"></i>Bootstrap
+                </div>
+            </div>
+
+            <!-- CAD Tools -->
+            <div class="skill-category">
+                <h4><i class="fas fa-cube me-2"></i><strong>CAD Tools</strong></h4>
+                <div class="skill-item">
+                    <i class="fas fa-industry me-3"></i>SOLIDWORKS
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-cube me-3"></i>CATIA V5
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-drafting-compass me-3"></i>Fusion 360
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-drafting-compass me-3"></i>AutoCAD
+                </div>
+            </div>
+
+            <!-- Database & Other -->
+            <div class="skill-category">
+                <h4><i class="fas fa-database me-2"></i><strong>Database</strong></h4>
+                <div class="skill-item">
+                    <i class="fas fa-database me-3"></i>MySQL
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-database me-3"></i>Excel
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-database me-3"></i>Power Bi
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4><i class="fas fa-video me-2"></i><strong>Editing Tools</strong></h4>
+                <div class="skill-item">
+                    <i class="fas fa-video me-3"></i>Premiere Pro
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-video me-3"></i>Davinci Reslove
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-video me-3"></i>Alight Motion
+                </div>
+            </div>
+            <!-- Add your skills content here -->
+        </div>
+    </section>
+    
+
+    <!-- Projects Section -->
+    <section id="projects" class="container py-5 scroll-animate">
+        <h2 class="section-title">Projects</h2>
+        <div class="row">
+            <!-- Add your projects content here -->
+             <!-- One Tap Cleaner -->
+            <div class="col-md-6">
+                <div class="project-card">
+                    <h3><strong>One Tap Cleaner</strong> </h3>
+                    <p>Semi-automatic brush with water storage tank and C-type rechargeable battery system</p>
+                    <div class="project-links">
+                        <span class="badge bg-primary">Fabrication</span>
+                        <span class="badge bg-primary">Slider Crank Mechanism</span>
+                        <span class="badge bg-success">CAD Design</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Electric Tractor -->
+            <div class="col-md-6">
+                <div class="project-card">
+                    <h3><strong>Electric Tractor</strong></h3>
+                    <p>4-wheel drive electric tractor design with omnidirectional movement capabilities</p>
+                    <div class="project-links">
+                        <span class="badge bg-primary">SOLIDWORKS</span>
+                        <span class="badge bg-success">CAD Design</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stirling Engine -->
+            <div class="col-md-6">
+                <div class="project-card">
+                    <h3><strong>Stirling Engine</strong></h3>
+                    <p>A closed-cycle engine using gas expansion and compression, designed with SolidWorks CAD tools for efficient power generation</p>
+                    <div class="project-links">
+                        <span class="badge bg-primary">SOLIDWORKS</span>
+                        <span class="badge bg-success">CAD Design</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Steam Engine -->
+            <div class="col-md-6">
+                <div class="project-card">
+                    <h3><strong>Double Acting Steam Engine</strong></h3>
+                    <p>CATIA V5 designed steam engine with enhanced power output mechanism</p>
+                    <div class="project-links">
+                        <span class="badge bg-primary">CATIA V5</span>
+                        <span class="badge bg-success">CAD Design</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Analysis Projects -->
+            <div class="col-md-6">
+                <div class="project-card">
+                    <h3><strong>HR Data Analysis</strong></h3>
+                    <p>Analyzed HR data using Python (NumPy, Pandas, Matplotlib, Seaborn) to identify
+                        attrition patterns and provide actionable insights</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Anbu-developer/Data_Analysis_with_python" 
+                           class="btn btn-sm btn-primary" 
+                           target="_blank">
+                           <i class="fab fa-github me-2"></i>View Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="project-card">
+                    <h3><strong>PizzaHub Analysis</strong></h3>
+                    <p>Analyzed pizza
+                        delivery dataset with SQL to optimize sales and
+                        delivery performance</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Anbu-developer/PizzaHub-Data-Analysis-with-SQL" 
+                           class="btn btn-sm btn-primary" 
+                           target="_blank">
+                           <i class="fab fa-github me-2"></i>SQL Repository
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    
+
+    <!-- Resume Section -->
+    <section id="resume" class="container py-5 text-center scroll-animate">
+        <a href="https://drive.google.com/file/d/1Hx4-V_VdUfZvN9ABT--UwcRgr5xR2ixw/view?usp=sharing" 
+           class="btn resume-btn" 
+           target="_blank">
+           <i class="fas fa-file-pdf me-2"></i>View My Resume
+        </a>
+    </section>
+    
+
+    <!-- Contact Section -->
+    <section id="contact" class="container py-5 scroll-animate">
+        <h2 class="section-title">Connect With Me</h2>
+        <div class="contact-grid">
+            <!-- Add your contact content here -->
+            <a href="https://github.com/Anbu-developer" class="contact-card" target="_blank">
+                <i class="fab fa-github fa-3x mb-3"></i>
+                <h5>GitHub</h5>
+                <!--<p>View My Code Repositories</p>-->
+            </a>
+            <a href="https://www.linkedin.com/in/s-anbu/" class="contact-card" target="_blank">
+                <i class="fab fa-linkedin fa-3x mb-3"></i>
+                <h5>LinkedIn</h5>
+                <!--<p>Professional Network</p>-->
+            </a>
+            <a href="mailto:anticanbu@gmail.com" class="contact-card">
+                <i class="fas fa-envelope fa-3x mb-3"></i>
+                <h5>Email</h5>
+                <!--<p>anticanbu@gmail.com</p>-->
+            </a>
+            <a href="https://wa.me/+917338783462" class="contact-card" target="_blank">
+                <i class="fab fa-whatsapp fa-3x mb-3"></i>
+                <h5>WhatsApp</h5>
+                <!--<p>+91 73387 83462</p>-->
+            </a>
+        </div>
+    </section>
+    <h5 class="copy1">Copyright Anbu.All rights reserved</h5>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Welcome Modal
+        $(document).ready(function() {
+            setTimeout(() => {
+                $('#welcomeModal').fadeOut(1000);
+            }, 3000);
+        });
+
+        // Scroll Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+
+        // Smooth Scroll
+        $('a[href^="#"]').on('click', function(e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: $($(this).attr('href')).offset().top - 70
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
